@@ -15,26 +15,25 @@ amt = 0.17
 
 
 def make_request(freq_hz: int, time_s: float):
-    # sine_tone(freq_hz, time_s)  # todo add ultimaker thing
     assert isinstance(freq_hz, int)
     assert isinstance(time_s, (float, int))
     headers = {
-    'Accept': 'application/json',
-    'Authorization': f'Digest username="{config["username"]}", realm="Jedi-API", nonce="{config["nonce"]}", uri="/api/v1/printer/beep", response="{config["response"]}", qop=auth, nc={config["nc"]}, cnonce="{config["cnonce"]}"',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive',
-    'Content-Type': 'application/json',
-    'Origin': f'{config["address"]}',
-    'Pragma': 'no-cache',
-    'Referer': f'{config["address"]}/docs/api/'
-}
+        'Accept': 'application/json',
+        'Authorization': f'Digest username="{config["username"]}", realm="Jedi-API", nonce="{config["nonce"]}", uri="/api/v1/printer/beep", response="{config["response"]}", qop=auth, nc={config["nc"]}, cnonce="{config["cnonce"]}"',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Origin': f'{config["address"]}',
+        'Pragma': 'no-cache',
+        'Referer': f'{config["address"]}/docs/api/'
+    }
 
     json_data = {
-    'frequency': freq_hz,
-    'duration': round(time_s*1000)-10,
-}
+        'frequency': freq_hz,
+        'duration': round(time_s*1000)-10,
+    }
 
-    response = requests.post('{config["address"]}/api/v1/printer/beep', headers=headers, json=json_data, verify=False)
+    response = requests.post(f'{config["address"]}/api/v1/printer/beep', headers=headers, json=json_data, verify=False)
 
 
 def make_sound(freq: int, time_ms: int):
